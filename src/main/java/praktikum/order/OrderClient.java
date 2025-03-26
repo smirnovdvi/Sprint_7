@@ -1,6 +1,6 @@
 package praktikum.order;
 
-import org.example.Client;
+import praktikum.Client;
 
 public class OrderClient extends Client {
 }
