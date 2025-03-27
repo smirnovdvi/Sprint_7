@@ -1,29 +1,17 @@
 package praktikum.courier;
 
 public class Credentials {
-    private String login;
-    private String password;
-
-    public Credentials() {
-    }
+    private final String login;
+    private final String password;
 
     public Credentials(String login, String password) {
         this.login = login;
         this.password = password;
     }
 
-    public static Credentials from(Courier courier) {
+    public static Credentials fromCourier(Courier courier) {
         return new Credentials(courier.getLogin(), courier.getPassword());
     }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 
     public String getLogin() {
         return login;

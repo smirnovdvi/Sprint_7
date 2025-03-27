@@ -6,14 +6,12 @@ import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.given;
 
 public class Client {
-    protected final String BASE_URI = "https://qa-scooter.praktikum-services.ru";
-    protected final String API_PREFIX = "/api/v1";
+    public static final String BASE_PATH = "api/v1";
 
-    protected RequestSpecification spec() {
+    public RequestSpecification spec() {
         return given().log().all()
                 .contentType(ContentType.JSON)
-                .baseUri(BASE_URI)
-                .basePath(API_PREFIX)
-                ;
+                .baseUri(EnvConfig.BASE_URI)
+                .basePath(BASE_PATH);
     }
 }

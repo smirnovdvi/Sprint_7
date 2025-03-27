@@ -1,4 +1,4 @@
-package praktikum.order;
+package praktikum.orders;
 
 import praktikum.Client;
 

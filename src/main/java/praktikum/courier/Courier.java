@@ -1,12 +1,11 @@
 package praktikum.courier;
 
-public class Courier {
-    private String login;
-    private String password;
-    private String firstName;
+import java.util.concurrent.ThreadLocalRandom;
 
-    public Courier() {
-    }
+public class Courier {
+    private final String login;
+    private final String password;
+    private final String firstName;
 
     public Courier(String login, String password, String firstName) {
         this.login = login;
@@ -14,16 +13,9 @@ public class Courier {
         this.firstName = firstName;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public static Courier random() {
+        int suffix = ThreadLocalRandom.current().nextInt(100, 100_000);
+        return new Courier("Jack" + suffix, "P@ssw0rd123", "Sparrow");
     }
 
     public String getLogin() {

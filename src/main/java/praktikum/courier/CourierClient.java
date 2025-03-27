@@ -1,43 +1,39 @@
 package praktikum.courier;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
+import praktikum.Client;
 
 import java.util.Map;
 
-public class CourierClient extends praktikum.Client {
-    protected final String ROOT = "/praktikum";
+public class CourierClient extends Client {
 
-    public ValidatableResponse create(Courier courier) {
+    private static final String COURIER = "courier";
+
+    @Step("логин")
+    public ValidatableResponse logIn(Credentials creds) {
+        return spec()
+                .body(creds)
+                .when()
+                .post(COURIER + "/login")
+                .then().log().all();
+    }
+
+    @Step("создать")
+    public ValidatableResponse createCourier(Courier courier) {
         return spec()
                 .body(courier)
                 .when()
-                .post(ROOT)
+                .post(COURIER)
                 .then().log().all();
     }
 
-    public ValidatableResponse login(Credentials creds) {
+    @Step("удалить")
+    public ValidatableResponse delete(int id) {
         return spec()
-                .body(creds)
+                .body(Map.of("id", id))
                 .when()
-                .post(ROOT + "/login")
-                .then().log().all();
-    }
-
-    public ValidatableResponse login(Map<String, String> creds) {
-        return spec()
-                .body(creds)
-                .when()
-                .post(ROOT + "/login")
-                .then().log().all();
-    }
-
-    public ValidatableResponse delete(int courierId) {
-        String json = String.format("{\"id\": \"%d\"}", courierId);
-
-        return spec()
-                .body(json)
-                .when()
-                .delete(ROOT + "/" + courierId)
+                .post(COURIER + "/" + id)
                 .then().log().all();
     }
 }
