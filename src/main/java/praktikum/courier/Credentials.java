@@ -1,5 +1,7 @@
 package praktikum.courier;
 
+import io.qameta.allure.Step;
+
 public class Credentials {
     private final String login;
     private final String password;
@@ -8,7 +10,7 @@ public class Credentials {
         this.login = login;
         this.password = password;
     }
-
+    @Step("Создание учетных данных из курьера")
     public static Credentials fromCourier(Courier courier) {
         return new Credentials(courier.getLogin(), courier.getPassword());
     }

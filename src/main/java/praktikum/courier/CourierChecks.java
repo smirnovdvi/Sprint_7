@@ -8,7 +8,7 @@ import java.net.HttpURLConnection;
 import static org.junit.Assert.assertTrue;
 
 public class CourierChecks {
-    @Step("Успешный логин")
+    @Step("Проверка успешной авторизации курьера")
     public int loginSuccess(ValidatableResponse loginResponse) {
         int id = loginResponse
                 .assertThat()
@@ -18,7 +18,7 @@ public class CourierChecks {
                 ;
         return id;
     }
-
+    @Step("Проверка успешности создания пользователя")
     public void created(ValidatableResponse createResponse) {
         boolean created = createResponse
                 .assertThat()
@@ -29,7 +29,7 @@ public class CourierChecks {
         assertTrue(created);
     }
 
-    @Step("Проверка сообщения об ошибке")
+    @Step("Формирование сообщения об ошибке")
     public String message(String expectedMessage) {
         return expectedMessage;
     }
