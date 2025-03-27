@@ -8,7 +8,7 @@ import java.net.HttpURLConnection;
 import static org.junit.Assert.assertTrue;
 
 public class CourierChecks {
-    @Step("успешный логин")
+    @Step("Успешный логин")
     public int loginSuccess(ValidatableResponse loginResponse) {
         int id = loginResponse
                 .assertThat()
@@ -25,7 +25,12 @@ public class CourierChecks {
                 .statusCode(HttpURLConnection.HTTP_CREATED)
                 .extract()
                 .path("ok")
-        ;
+                ;
         assertTrue(created);
+    }
+
+    @Step("Проверка сообщения об ошибке")
+    public String message(String expectedMessage) {
+        return expectedMessage;
     }
 }

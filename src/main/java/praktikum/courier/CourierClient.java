@@ -10,7 +10,7 @@ public class CourierClient extends Client {
 
     private static final String COURIER = "courier";
 
-    @Step("логин")
+    @Step("Логин курьера")
     public ValidatableResponse logIn(Credentials creds) {
         return spec()
                 .body(creds)
@@ -19,7 +19,7 @@ public class CourierClient extends Client {
                 .then().log().all();
     }
 
-    @Step("создать")
+    @Step("Создать курьера")
     public ValidatableResponse createCourier(Courier courier) {
         return spec()
                 .body(courier)
@@ -28,7 +28,7 @@ public class CourierClient extends Client {
                 .then().log().all();
     }
 
-    @Step("удалить")
+    @Step("Удалить курьера")
     public ValidatableResponse delete(int id) {
         return spec()
                 .body(Map.of("id", id))
