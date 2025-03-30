@@ -12,7 +12,11 @@ public class CourierLoginTest {
     private final CourierClient client = new CourierClient();
     private final CourierChecks check = new CourierChecks();
     private int courierId;
-
+    private int performLoginAndGetId(Courier courier) {
+        Credentials creds = Credentials.fromCourier(courier);
+        ValidatableResponse loginResponse = client.logIn(creds);
+        return check.loginSuccess(loginResponse);
+    }
     @After
     public void deleteCourier() {
         if (courierId > 0) {
@@ -27,9 +31,7 @@ public class CourierLoginTest {
         ValidatableResponse createResponse = client.createCourier(courier);
         check.created(createResponse);
 
-        var creds = Credentials.fromCourier(courier);
-        ValidatableResponse loginResponse = client.logIn(creds);
-        courierId = check.loginSuccess(loginResponse);
+        courierId = performLoginAndGetId(courier);
 
         assertNotEquals(0, courierId);
     }
@@ -46,6 +48,7 @@ public class CourierLoginTest {
         loginResponse.assertThat()
                 .statusCode(400)
                 .body("message", containsString("Недостаточно данных для входа"));
+        courierId = performLoginAndGetId(courier);
     }
 
     @Test
@@ -60,6 +63,7 @@ public class CourierLoginTest {
         loginResponse.assertThat()
                 .statusCode(404)
                 .body("message", containsString("Учетная запись не найдена"));
+        courierId = performLoginAndGetId(courier);
     }
 
     @Test
@@ -75,6 +79,7 @@ public class CourierLoginTest {
         loginResponse.assertThat()
                 .statusCode(400)
                 .body("message", containsString("Недостаточно данных для входа"));
+        courierId = performLoginAndGetId(courier);
     }
 
     @Test
@@ -94,9 +99,7 @@ public class CourierLoginTest {
         ValidatableResponse createResponse = client.createCourier(courier);
         check.created(createResponse);
 
-        var creds = Credentials.fromCourier(courier);
-        ValidatableResponse loginResponse = client.logIn(creds);
-        courierId = check.loginSuccess(loginResponse);
+        courierId = performLoginAndGetId(courier);
 
         assertNotEquals(0, courierId);
     }
