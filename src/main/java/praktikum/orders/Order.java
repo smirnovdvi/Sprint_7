@@ -1,12 +1,8 @@
 package praktikum.orders;
 
-public class Order {
-    private String[] colors;
-    public Order(String[] colors) {
-        this.colors = colors;
-    }
+import lombok.Value;
 
-    public String[] getColors() {
-        return colors;
-    }
+@Value
+public class Order {
+    String[] colors;
 }
