@@ -11,6 +11,11 @@ public class CourierTest {
     private final CourierClient client = new CourierClient();
     private final CourierChecks check = new CourierChecks();
     private int courierId;
+    private int performLoginAndGetId(Courier courier) {
+        Credentials creds = Credentials.fromCourier(courier);
+        ValidatableResponse loginResponse = client.logIn(creds);
+        return check.loginSuccess(loginResponse);
+    }
 
     @Test
     @DisplayName("Курьер успешно создается")
@@ -18,6 +23,7 @@ public class CourierTest {
         var courier = Courier.random();
         ValidatableResponse createResponse = client.createCourier(courier);
         check.created(createResponse);
+        courierId = performLoginAndGetId(courier);
     }
 
     @Test
@@ -51,13 +57,6 @@ public class CourierTest {
         check.created(createResponse);
     }
 
-    @Test
-    @DisplayName("Успешный запрос возвращает 'ok': true")
-    public void successfulRequestReturnsOkTrue() {
-        var courier = Courier.random();
-        ValidatableResponse createResponse = client.createCourier(courier);
-        check.created(createResponse);
-    }
 
     @Test
     @DisplayName("Если отсутствует обязательное поле, запрос возвращает ошибку")
@@ -80,6 +79,7 @@ public class CourierTest {
         duplicateResponse.assertThat()
                 .statusCode(409)
                 .body("message", equalTo(check.message("Этот логин уже используется. Попробуйте другой."))); // Проверка существования логина
+        courierId = performLoginAndGetId(courier);
     }
 
     @After

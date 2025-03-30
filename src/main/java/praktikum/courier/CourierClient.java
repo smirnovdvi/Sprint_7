@@ -29,11 +29,11 @@ public class CourierClient extends Client {
     }
 
     @Step("Удалить курьера")
-    public ValidatableResponse delete(int id) {
-        return spec()
+    public void delete(int id) {
+        spec()
                 .body(Map.of("id", id))
                 .when()
-                .post(COURIER + "/" + id)
+                .delete(COURIER + "/" + id)
                 .then().log().all();
     }
 }
